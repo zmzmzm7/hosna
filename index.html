@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حسنا - ماه، ستاره و سیاره‌ها</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #7f53ac;
+      --purple-dark: #41325e;
+      --lilac: #e6daff;
+      --lilac-dark: #c7b3ee;
+      --star-bg: url('https://www.transparenttextures.com/patterns/stardust.png');
+      --navbar-height: 64px;
+      --transition: cubic-bezier(.4,0,.2,1);
+      --logo-color: #ffe082;
+    }
+    body {
+      direction: rtl;
+      font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--purple-dark);
+      color: #fff;
+      min-height: 100vh;
+      transition: background 1s var(--transition), color 0.4s var(--transition);
+      overflow-x: hidden;
+      /* Star field animation background */
+      background-image:
+        radial-gradient(circle at 20% 10%, #fff 1px, transparent 1%),
+        radial-gradient(circle at 80% 20%, #fff 1px, transparent 1%),
+        radial-gradient(circle at 60% 80%, #fff 2px, transparent 2%),
+        radial-gradient(circle at 40% 60%, #ffe082 1px, transparent 1%),
+        var(--star-bg);
+      background-size: cover;
+      background-repeat: repeat;
+      position: relative;
+    }
+    /* Falling Star Animation */
+    .star-anim {
+      position: fixed;
+      top: -40px;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .star-anim .star {
+      position: absolute;
+      width: 2px;
+      height: 60px;
+      background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0) 100%);
+      opacity: 0.8;
+      border-radius: 3px;
+      animation: fallStar 2.7s linear infinite;
+    }
+    @keyframes fallStar {
+      0% { transform: translateY(0) scaleX(1) rotate(-7deg); opacity:1;}
+      95% { opacity:0.9;}
+      100% { transform: translateY(90vh) scaleX(0.5) rotate(-7deg); opacity:0;}
+    }
+    /* ==== Navbar ==== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(36, 25, 59, 0.97);
+      height: var(--navbar-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      box-shadow: 0 2px 12px 0 rgba(36,25,59,0.18);
+      overflow-x: auto;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: var(--logo-color);
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px #312053;
+      position: relative;
+      cursor: pointer;
+    }
+    .logo img {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px #7f53ac33;
+      background: #fff;
+      animation: logo-img-spin 2.7s linear infinite;
+    }
+    /* لوگو نوشته انیمیشن */
+    .logo-text {
+      display: inline-block;
+      animation: logo-text-glow 2s ease-in-out infinite alternate;
+      position: relative;
+    }
+    @keyframes logo-text-glow {
+      0% { color: var(--logo-color); text-shadow: 0 2px 12px #ffe08244, 0 0px 0 #fff;}
+      100% { color: #fff; text-shadow: 0 2px 22px #ffe082, 0 0px 12px #fff;}
+    }
+    @keyframes logo-img-spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+    /* Navbar links animated */
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 22px;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+    .navbar a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.08em;
+      padding: 8px 16px;
+      border-radius: 16px;
+      transition: background 0.4s var(--transition), color 0.4s var(--transition), box-shadow 0.4s var(--transition), transform 0.3s var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      animation: navbar-link-anim 1.7s cubic-bezier(.77,0,.18,1) infinite alternate;
+    }
+    @keyframes navbar-link-anim {
+      0% { transform: scale(1) translateY(0); box-shadow: 0 0 0 #ffe08244;}
+      100% { transform: scale(1.08) translateY(-2px); box-shadow: 0 2px 14px #ffe08222;}
+    }
+    .navbar a::after {
+      content: '';
+      display: block;
+      width: 0%;
+      height: 2px;
+      background: #ffe082;
+      position: absolute;
+      bottom: 2px;
+      right: 0;
+      transition: width 0.35s var(--transition);
+    }
+    .navbar a:hover, .navbar a.active {
+      background: #7f53ac88;
+      color: #ffe082;
+      box-shadow: 0 1px 12px #fff1;
+      transform: scale(1.12) translateY(-4px);
+      animation: none;
+    }
+    .navbar a:hover::after, .navbar a.active::after {
+      width: 80%;
+    }
+    .theme-switcher {
+      display: flex;
+      gap: 6px;
+    }
+    .theme-switcher button {
+      border: none;
+      outline: none;
+      padding: 6px 16px;
+      border-radius: 22px;
+      background: #fff;
+      color: var(--purple);
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #7f53ac22;
+      transition: background 0.3s var(--transition), color 0.3s var(--transition);
+      animation: theme-btn-anim 2.2s cubic-bezier(.77,0,.18,1) infinite alternate;
+    }
+    @keyframes theme-btn-anim {
+      0% { box-shadow: 0 2px 8px #7f53ac22;}
+      100% { box-shadow: 0 8px 18px #ffe08233;}
+    }
+    .theme-switcher button:hover {
+      background: #ffe082;
+      color: var(--purple-dark);
+    }
+    /* ==== Hamburger ==== */
+    .hamburger {
+      width: 38px;
+      height: 38px;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      z-index: 101;
+      transition: transform 0.25s var(--transition);
+    }
+    .hamburger span {
+      display: block;
+      width: 28px;
+      height: 4px;
+      background: #ffe082;
+      border-radius: 3px;
+      transition: all 0.3s var(--transition);
+      animation: hamburger-bar-anim 2s infinite alternate;
+    }
+    @keyframes hamburger-bar-anim {
+      0% { box-shadow: 0 3px 12px #ffe08244;}
+      100% { box-shadow: 0 1px 2px #ffe082;}
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+    /* ==== Mobile Nav ==== */
+    .mobile-nav {
+      position: fixed;
+      top: var(--navbar-height);
+      right: 0;
+      width: 100vw;
+      height: calc(100vh - var(--navbar-height));
+      background: rgba(34, 22, 54, 0.97);
+      transform: translateX(100%);
+      transition: transform 0.5s var(--transition);
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 32px;
+      box-shadow: -2px 0 18px #7f53ac44;
+    }
+    .mobile-nav.active {
+      transform: translateX(0%);
+    }
+    .mobile-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      align-items: center;
+    }
+    .mobile-nav a {
+      text-decoration: none;
+      color: #ffe082;
+      font-size: 1.2em;
+      padding: 14px 0;
+      border-radius: 18px;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s, transform 0.25s;
+      width: 120px;
+      text-align: center;
+      box-shadow: 0 1px 7px #ffe08211;
+      position: relative;
+      overflow: hidden;
+      animation: mobile-link-anim 1.6s cubic-bezier(.77,0,.18,1) infinite alternate;
+    }
+    @keyframes mobile-link-anim {
+      0% { transform: scale(1) translateX(0);}
+      100% { transform: scale(1.05) translateX(4px);}
+    }
+    .mobile-nav a::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 0;
+      background: #7f53ac;
+      transition: height 0.3s var(--transition);
+      z-index: -1;
+    }
+    .mobile-nav a:hover::before,
+    .mobile-nav a.active::before {
+      height: 100%;
+    }
+    .mobile-nav a:hover, .mobile-nav a.active {
+      color: #fff;
+      background: #7f53ac;
+      box-shadow: 0 2px 8px #ffe08244;
+      transform: scale(1.1) !important;
+      animation: none;
+    }
+    /* ==== Main ==== */
+    main {
+      padding: 32px 0 0 0;
+      max-width: 850px;
+      margin: auto;
+      min-height: calc(100vh - var(--navbar-height) - 70px);
+      position: relative;
+      z-index: 1;
+    }
+    section {
+      margin-bottom: 64px;
+      position: relative;
+      border-radius: 24px;
+      box-shadow: 0 4px 42px #31205322;
+      background: rgba(36,25,59,0.77);
+      padding: 32px 18px 24px 18px;
+      transition: box-shadow 0.7s var(--transition), background 0.7s var(--transition);
+      overflow: hidden;
+    }
+    section:hover {
+      box-shadow: 0 10px 54px #ffe08233;
+      background: rgba(55,35,109,0.88);
+    }
+    h2 {
+      color: #ffe082;
+      font-size: 2em;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 18px #312053;
+      font-weight: bold;
+      position: relative;
+      z-index: 2;
+      animation: h2-anim 2.2s cubic-bezier(.77,0,.18,1) infinite alternate;
+    }
+    @keyframes h2-anim {
+      0% { text-shadow: 0 2px 12px #ffe08222;}
+      100% { text-shadow: 0 2px 28px #ffe082;}
+    }
+    .animated-img {
+      width: 110px;
+      height: auto;
+      border-radius: 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 24px #ffe08233;
+      animation: img-float 2.2s infinite alternate;
+      transition: box-shadow 0.4s var(--transition), transform 0.4s var(--transition);
+      cursor: pointer;
+    }
+    @keyframes img-float {
+      0% { transform: translateY(0);}
+      100% { transform: translateY(-14px);}
+    }
+    .animated-img:hover {
+      box-shadow: 0 10px 32px #ffe08277;
+      transform: scale(1.07) rotate(-5deg);
+    }
+    .animated-text {
+      display: block;
+      font-size: 1.13em;
+      margin-bottom: 9px;
+      animation: moon-gravity 2.2s infinite alternate cubic-bezier(0.5,0,0.5,1);
+      transition: color 0.7s var(--transition), text-shadow 0.7s var(--transition);
+      text-shadow: 0 2px 12px #fff2;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes moon-gravity {
+      0% { transform: translateY(0) scale(1);}
+      100% { transform: translateY(-8px) scale(1.04);}
+    }
+    /* ==== Scroll Reveal ==== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px) scale(0.97);
+      transition: opacity 1.2s var(--transition), transform 1.2s var(--transition);
+      will-change: opacity, transform;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    /* ==== Footer ==== */
+    footer {
+      text-align: center;
+      background: rgba(36, 25, 59, 0.93);
+      padding: 24px 0 12px 0;
+      color: #ffe082;
+      font-size: 1em;
+      letter-spacing: 1px;
+      box-shadow: 0 -1px 8px #ffe08211;
+    }
+    /* ==== Themes ==== */
+    body.stars {
+      background: linear-gradient(120deg, #332159 0%, #1f1037 100%), var(--star-bg);
+      color: #fff;
+    }
+    body.purple {
+      background: linear-gradient(120deg, var(--purple) 0%, var(--purple-dark) 100%);
+      color: #ffe082;
+    }
+    body.purple .logo { color: #ffe082;}
+    /* ==== Responsive ==== */
+    @media (max-width: 900px) {
+      main { max-width: 99vw; padding: 22px 0 0 0;}
+    }
+    @media (max-width: 750px) {
+      header { padding: 0 12px;}
+      .logo img { height: 36px; width: 36px;}
+      h2 { font-size: 1.3em;}
+      .animated-img { width: 80px;}
+      .navbar ul { gap: 8px;}
+      .theme-switcher button { padding: 4px 8px;}
+      section { padding: 22px 6px;}
+    }
+    @media (max-width: 600px) {
+      header { padding: 0 7px;}
+      .logo img { height: 32px; width: 32px;}
+      h2 { font-size: 1.1em;}
+      .animated-img { width: 56px;}
+      .navbar { display: none; }
+      .hamburger { display: flex; }
+      .theme-switcher { gap: 2px;}
+      .mobile-nav { padding-top: 18px;}
+      main { padding: 7px 0 0 0;}
+      section { padding: 14px 2px;}
+    }
+    /* ==== Space Animation: shooting stars, floating planets ==== */
+    .floating-planet {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.55;
+      animation: floatPlanet 9s ease-in-out infinite alternate;
+    }
+    @keyframes floatPlanet {
+      0% { transform: translateY(0) scale(1);}
+      100% { transform: translateY(-40px) scale(1.07);}
+    }
+    .floating-planet.planet1 {
+      left: 6vw; top: 14vh; width: 65px;
+      animation-delay: 0s;
+    }
+    .floating-planet.planet2 {
+      right: 8vw; top: 7vh; width: 45px;
+      animation-delay: 2.5s;
+    }
+    .floating-planet.planet3 {
+      left: 11vw; bottom: 10vh; width: 55px;
+      animation-delay: 1s;
+    }
+    .floating-planet.planet4 {
+      right: 13vw; bottom: 8vh; width: 38px;
+      animation-delay: 1.8s;
+    }
+    .floating-planet.star1 {
+      left: 17vw; top: 2vh; width: 30px;
+      animation: floatPlanet 6s infinite alternate;
+      animation-delay: 2s;
+    }
+    .floating-planet.star2 {
+      right: 19vw; bottom: 3vh; width: 25px;
+      animation: floatPlanet 7s infinite alternate;
+      animation-delay: 3.2s;
+    }
+  </style>
+</head>
+<body>
+  <!-- Star falling animation container -->
+  <div class="star-anim" id="star-anim"></div>
+
+  <!-- Floating planets & stars for cosmic vibe -->
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgfkcmLG5QgJavMlzmwJA9wgr5hYfpeppQiA&s" class="floating-planet planet1" alt="عطارد">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Venus-real_color.jpg" class="floating-planet planet2" alt="زهره">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" class="floating-planet planet3" alt="زمین">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg" class="floating-planet planet4" alt="مریخ">
+  <img src="https://i.imgur.com/TfQedGc.png" class="floating-planet star1" alt="ستاره">
+  <img src="https://i.imgur.com/TfQedGc.png" class="floating-planet star2" alt="ستاره">
+
+  <audio id="moon-audio" src="moon.mp3" autoplay loop></audio>
+
+  <header>
+    <div class="logo">
+      <img src="https://img.icons8.com/fluency/48/moon-symbol.png" alt="لوگوی حسنا">
+      <span class="logo-text">حسنا</span>
+    </div>
+    <nav class="navbar">
+      <ul>
+        <li><a href="#moon">ماه</a></li>
+        <li><a href="#star">ستاره</a></li>
+        <li><a href="#mercury">عطارد</a></li>
+        <li><a href="#venus">زهره</a></li>
+        <li><a href="#earth">زمین</a></li>
+        <li><a href="#mars">مریخ</a></li>
+        <li><a href="#jupiter">مشتری</a></li>
+        <li><a href="#solar-system">مدار سیاره‌ها</a></li>
+      </ul>
+    </nav>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="theme-switcher">
+      <button data-theme="stars">ستاره‌ای</button>
+      <button data-theme="purple">بنفش</button>
+    </div>
+  </header>
+  <nav class="mobile-nav" id="mobileNav">
+    <ul>
+      <li><a href="#moon">ماه</a></li>
+      <li><a href="#star">ستاره</a></li>
+      <li><a href="#mercury">عطارد</a></li>
+      <li><a href="#venus">زهره</a></li>
+      <li><a href="#earth">زمین</a></li>
+      <li><a href="#mars">مریخ</a></li>
+      <li><a href="#jupiter">مشتری</a></li>
+      <li><a href="#solar-system">مدار سیاره‌ها</a></li>
+    </ul>
+  </nav>
+  <main>
+    <section id="solar-system" class="reveal">
+      <h2>مدار سیاره‌های منظومه شمسی</h2>
+      <div style="text-align:center;">
+        <!-- ویدیو یا گیف گردش مدار -->
+        <video src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Geosynchronous_orbit.gif/250px-Geosynchronous_orbit.gif" autoplay loop muted playsinline style="width:340px; max-width:90vw; border-radius:16px; box-shadow:0 2px 24px #ffe08244;" poster="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Geosynchronous_orbit.gif/250px-Geosynchronous_orbit.gif"></video>
+        <!-- اگر ویدیو بالا نمایش داده نشد از گیف استفاده کنید: -->
+        <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Geosynchronous_orbit.gif/250px-Geosynchronous_orbit.gif" alt="انیمیشن مدار سیاره‌ها" style="width:340px; max-width:90vw; border-radius:16px; box-shadow:0 2px 24px #ffe08244;"> -->
+      </div>
+      <p class="animated-text">
+        در مرکز منظومه شمسی خورشید قرار دارد و سیاره‌ها به دور آن در مدارهای بیضوی حرکت می‌کنند. این حرکت هماهنگ و زیبا باعث شکل‌گیری شب و روز، فصل‌ها و تغییرات بسیاری در زمین و دیگر سیاره‌ها می‌شود. منظومه شمسی خانه سیاراتی است که هر یک ویژگی‌های خاص خود را دارند و دانشمندان هنوز در حال کشف اسرار آن هستند.
+      </p>
+      <p class="animated-text">
+        تماشای گردش سیاره‌ها در مدارهای خود، نشان‌دهنده نظم و زیبایی بی‌نظیر کیهان است. سیاره‌ها همواره در تعادل گرانشی با خورشید و یکدیگر هستند و این تعادل باعث پایداری و بقای منظومه شمسی می‌شود.
+      </p>
+    </section>
+    <section id="moon" class="info-section reveal">
+      <h2>ماه</h2>
+      <img src="https://i.imgur.com/mR3kaxv.png" alt="ماه" class="animated-img">
+      <p class="animated-text">
+        ماه تنها قمر طبیعی زمین است و همیشه در آسمان شب با نور زیبای خود می‌درخشد. این جرم آسمانی نقش مهمی در زندگی روی زمین دارد؛ از کنترل جزر و مد گرفته تا الهام‌بخشی در هنر و ادبیات. سطح ماه پر از دهانه‌های برخوردی، کوه‌ها و دره‌های عمیق است. مأموریت‌های فضایی زیادی برای کشف ماه انجام شده و هنوز هم اسرار بسیاری درباره ماه باقی مانده است.
+      </p>
+      <p class="animated-text">
+        جاذبه ماه باعث می‌شود که اقیانوس‌های زمین بالا و پایین شوند و حتی در فرهنگ‌های مختلف، ماه نماد تغییر، زیبایی و رازآلودگی است. امروزه دانشمندان به دنبال کشف منابع جدید و رازهای پنهان ماه هستند.
+      </p>
+    </section>
+    <section id="star" class="info-section reveal">
+      <h2>ستاره</h2>
+      <img src="https://i.imgur.com/TfQedGc.png" alt="ستاره" class="animated-img">
+      <p class="animated-text">
+        ستاره‌ها گوی‌های عظیم گازی هستند که در اعماق فضا می‌درخشند. آن‌ها با فرآیندهای هسته‌ای درون خود انرژی تولید می‌کنند و نور و گرما به جهان می‌بخشند. خورشید نزدیک‌ترین ستاره به زمین است و منبع اصلی انرژی برای سیاره ما محسوب می‌شود.
+      </p>
+      <p class="animated-text">
+        ستاره‌ها در آسمان شب به صورت گروهی یا منفرد دیده می‌شوند و با گذر زمان حرکت می‌کنند. برخی از ستاره‌ها در پایان عمر خود به ابرنواختر یا سیاهچاله تبدیل می‌شوند که یکی از شگفتی‌های عالم هستی است.
+      </p>
+    </section>
+    <section id="mercury" class="info-section reveal">
+      <h2>عطارد</h2>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgfkcmLG5QgJavMlzmwJA9wgr5hYfpeppQiA&s" alt="عطارد" class="animated-img">
+      <p class="animated-text">
+        عطارد نزدیک‌ترین سیاره به خورشید است و کوچک‌ترین سیاره منظومه شمسی به شمار می‌آید. سطح این سیاره پر از دهانه‌های برخوردی است و دمای عطارد در طول روز بسیار بالا و در شب بسیار پایین می‌شود.
+      </p>
+      <p class="animated-text">
+        عطارد فاقد اتمسفر ضخیم است و به همین دلیل شرایط زندگی در آن وجود ندارد. این سیاره به دلیل نزدیکی زیاد به خورشید، همیشه یکی از چالش‌های اصلی برای مطالعه و کاوش فضایی بوده است.
+      </p>
+    </section>
+    <section id="venus" class="info-section reveal">
+      <h2>زهره</h2>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Venus-real_color.jpg" alt="زهره" class="animated-img">
+      <p class="animated-text">
+        زهره دومین سیاره نزدیک به خورشید و درخشان‌ترین سیاره در آسمان شب است. اتمسفر زهره بسیار ضخیم و پر از گازهای سمی مانند دی‌اکسید کربن است که باعث ایجاد اثر گلخانه‌ای شدید و دمای بالای سطح سیاره می‌شود.
+      </p>
+      <p class="animated-text">
+        زهره به عنوان سیاره‌ای مرموز شناخته می‌شود که سطح آن مملو از آتشفشان‌ها و کوه‌های بلند است. شباهت‌های ظاهری زیادی بین زمین و زهره وجود دارد، اما تفاوت‌های ساختاری و جوی آن‌ها بسیار زیاد است.
+      </p>
+    </section>
+    <section id="earth" class="info-section reveal">
+      <h2>زمین</h2>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" alt="زمین" class="animated-img">
+      <p class="animated-text">
+        زمین سومین سیاره از خورشید و تنها سیاره شناخته‌شده با حیات است. سطح زمین پوشیده از آب، خاک و گیاهان است و دارای اقیانوس‌ها، کوه‌ها، جنگل‌ها و بیابان‌های گسترده است.
+      </p>
+      <p class="animated-text">
+        جو زمین از اکسیژن، نیتروژن و سایر گازها تشکیل شده و شرایط مناسب برای زندگی را فراهم کرده است. زمین خانه میلیاردها گونه زنده است و هر روز توسط انسان‌ها، حیوانات و گیاهان به شکل‌های مختلفی تغییر می‌کند.
+      </p>
+    </section>
+    <section id="mars" class="info-section reveal">
+      <h2>مریخ</h2>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg" alt="مریخ" class="animated-img">
+      <p class="animated-text">
+        مریخ به عنوان سیاره سرخ شناخته می‌شود و چهارمین سیاره از خورشید است. سطح مریخ مملو از کوه‌ها، دره‌ها و بیابان‌های سرخ رنگ است. دانشمندان معتقدند که در گذشته آب مایع روی سطح مریخ جریان داشته است.
+      </p>
+      <p class="animated-text">
+        مریخ یکی از اهداف اصلی مأموریت‌های فضایی و کاوش برای یافتن نشانه‌های حیات یا امکان زندگی انسان‌ها در آینده است. مریخ دارای دو قمر کوچک به نام‌های فوبوس و دیموس است.
+      </p>
+    </section>
+    <section id="jupiter" class="info-section reveal">
+      <h2>مشتری</h2>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg" alt="مشتری" class="animated-img">
+      <p class="animated-text">
+        مشتری بزرگ‌ترین سیاره منظومه شمسی است و پنجمین سیاره از خورشید. این سیاره دارای حلقه‌های نازک و بیش از ۷۰ قمر است که معروف‌ترین آن‌ها گانیمد و اروپا هستند.
+      </p>
+      <p class="animated-text">
+        مشتری با طوفان‌های عظیم و لکه قرمز مشهورش شناخته می‌شود. این سیاره گازی است و سطح جامدی ندارد. مشتری یکی از مهم‌ترین اجرام آسمانی برای مطالعه و فهم بهتر منظومه شمسی است.
+      </p>
+    </section>
+  </main>
+  <footer>
+    <p>تمام حقوق متعلق به حسنا &copy; 2025</p>
+  </footer>
+  <script>
+    // تم سایت
+    document.querySelectorAll('.theme-switcher button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.body.classList.remove('stars', 'purple');
+        document.body.classList.add(btn.getAttribute('data-theme'));
+      });
+    });
+
+    // منوی همبرگری
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileNav.classList.toggle('active');
+      document.body.classList.toggle('nav-open');
+    });
+    // بستن منو همبرگری با کلیک روی لینک
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileNav.classList.remove('active');
+        document.body.classList.remove('nav-open');
+      });
+    });
+
+    // فعال سازی لینک منوی بالا هنگام اسکرول
+    function activateMenuLink() {
+      let sections = Array.from(document.querySelectorAll('main section'));
+      let scroll = window.scrollY + window.innerHeight/3;
+      let currSection = sections.findLast(sec => sec.offsetTop <= scroll);
+      let id = currSection ? currSection.id : '';
+      document.querySelectorAll('.navbar a, .mobile-nav a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
+      });
+    }
+    window.addEventListener('scroll', activateMenuLink);
+
+    // ظاهر شدن بخش‌ها با اسکرول
+    function revealOnScroll() {
+      let reveals = document.querySelectorAll('.reveal');
+      let triggerBottom = window.innerHeight * 0.88;
+      reveals.forEach(el => {
+        let rect = el.getBoundingClientRect();
+        if(rect.top < triggerBottom) el.classList.add('visible');
+        else el.classList.remove('visible');
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // تکان دادن نوشته‌ها مثل جاذبه ماه
+    function randomGravity(element) {
+      setInterval(() => {
+        const x = Math.random() * 8 - 4;
+        const y = Math.random() * 14 - 7;
+        element.style.transform = `translate(${x}px,${y}px) scale(1.03)`;
+      }, 1000 + Math.random()*800);
+    }
+    document.querySelectorAll('.animated-text').forEach(randomGravity);
+
+    // تکان دادن عکس‌ها
+    function imgGravity(element) {
+      setInterval(() => {
+        const x = Math.random() * 10 - 5;
+        const y = Math.random() * 12 - 6;
+        element.style.transform = `translate(${x}px,${y}px) scale(1.04)`;
+      }, 1200 + Math.random()*900);
+    }
+    document.querySelectorAll('.animated-img').forEach(imgGravity);
+
+    // پخش صوت ماه در لوپ
+    const moonAudio = document.getElementById('moon-audio');
+    moonAudio.volume = 0.15;
+    document.body.addEventListener('click', () => {
+      if (moonAudio.paused) moonAudio.play();
+    });
+
+    // فعال سازی لینک منو با کلیک
+    document.querySelectorAll('.navbar a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('.navbar a').forEach(a=>a.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // ستاره‌های دنباله‌دار انیمیشن
+    function createStars() {
+      const starAnim = document.getElementById('star-anim');
+      for(let i=0; i<6; i++) {
+        let star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random()*98 + 'vw';
+        star.style.animationDelay = (Math.random()*4) + 's';
+        starAnim.appendChild(star);
+      }
+    }
+    createStars();
+
+    // انیمیشن لوگوی حسنا: تایپ شدن نوشته
+    function animateLogoText() {
+      const logoText = document.querySelector('.logo-text');
+      const text = "حسنا";
+      let index = 0;
+      logoText.textContent = "";
+      function type() {
+        if(index < text.length) {
+          logoText.textContent += text[index];
+          index++;
+          setTimeout(type, 180);
+        } else {
+          setTimeout(() => {
+            logoText.textContent = "";
+            index = 0;
+            type();
+          }, 1800); // pause and restart
+        }
+      }
+      type();
+    }
+    animateLogoText();
+
+    // انیمیشن بیشتر بخش‌های سایت: ستاره چشمک‌زن داخل هر section
+    document.querySelectorAll('section').forEach(section => {
+      let star = document.createElement('img');
+      star.src = 'https://i.imgur.com/GIWuL2n.png';
+      star.alt = 'ستاره';
+      star.style.position = "absolute";
+      star.style.top = Math.random()*80+10+'%';
+      star.style.left = Math.random()*80+10+'%';
+      star.style.width = '34px';
+      star.style.pointerEvents = 'none';
+      star.style.opacity = '0.7';
+      star.style.zIndex = '2';
+      star.style.animation = 'twinkleStar 2s infinite alternate';
+      section.appendChild(star);
+    });
+    // ستاره چشمک‌زن
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes twinkleStar {
+        0% { filter: brightness(1) drop-shadow(0 0 2px #ffe082);}
+        100% { filter: brightness(1.7) drop-shadow(0 0 14px #ffe082);}
+      }
+    `;
+    document.head.appendChild(style);
+
+  </script>
+</body>
+</html>
