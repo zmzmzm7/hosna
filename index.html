@@ -26,7 +26,7 @@
       min-height: 100vh;
       transition: background 1s var(--transition), color 0.4s var(--transition);
       overflow-x: hidden;
-      /* Star field animation background */
+      
       background-image:
         radial-gradient(circle at 20% 10%, #fff 1px, transparent 1%),
         radial-gradient(circle at 80% 20%, #fff 1px, transparent 1%),
@@ -37,7 +37,7 @@
       background-repeat: repeat;
       position: relative;
     }
-    /* Falling Star Animation */
+    
     .star-anim {
       position: fixed;
       top: -40px;
@@ -62,7 +62,7 @@
       95% { opacity:0.9;}
       100% { transform: translateY(90vh) scaleX(0.5) rotate(-7deg); opacity:0;}
     }
-    /* ==== Navbar ==== */
+    
     header {
       position: sticky;
       top: 0;
@@ -96,7 +96,7 @@
       background: #fff;
       animation: logo-img-spin 2.7s linear infinite;
     }
-    /* لوگو نوشته انیمیشن */
+    
     .logo-text {
       display: inline-block;
       animation: logo-text-glow 2s ease-in-out infinite alternate;
@@ -110,7 +110,7 @@
       0% { transform: rotate(0deg);}
       100% { transform: rotate(360deg);}
     }
-    /* Navbar links animated */
+    
     .navbar ul {
       list-style: none;
       display: flex;
@@ -182,7 +182,7 @@
       background: #ffe082;
       color: var(--purple-dark);
     }
-    /* ==== Hamburger ==== */
+    
     .hamburger {
       width: 38px;
       height: 38px;
@@ -217,7 +217,7 @@
     .hamburger.active span:nth-child(3) {
       transform: translateY(-10px) rotate(-45deg);
     }
-    /* ==== Mobile Nav ==== */
+    
     .mobile-nav {
       position: fixed;
       top: var(--navbar-height);
@@ -284,7 +284,7 @@
       transform: scale(1.1) !important;
       animation: none;
     }
-    /* ==== Main ==== */
+    
     main {
       padding: 32px 0 0 0;
       max-width: 850px;
@@ -354,7 +354,7 @@
       0% { transform: translateY(0) scale(1);}
       100% { transform: translateY(-8px) scale(1.04);}
     }
-    /* ==== Scroll Reveal ==== */
+    
     .reveal {
       opacity: 0;
       transform: translateY(40px) scale(0.97);
@@ -365,7 +365,7 @@
       opacity: 1;
       transform: translateY(0) scale(1);
     }
-    /* ==== Footer ==== */
+    
     footer {
       text-align: center;
       background: rgba(36, 25, 59, 0.93);
@@ -375,7 +375,7 @@
       letter-spacing: 1px;
       box-shadow: 0 -1px 8px #ffe08211;
     }
-    /* ==== Themes ==== */
+    
     body.stars {
       background: linear-gradient(120deg, #332159 0%, #1f1037 100%), var(--star-bg);
       color: #fff;
@@ -410,7 +410,7 @@
       main { padding: 7px 0 0 0;}
       section { padding: 14px 2px;}
     }
-    /* ==== Space Animation: shooting stars, floating planets ==== */
+    
     .floating-planet {
       position: absolute;
       z-index: 0;
@@ -505,9 +505,9 @@
     <section id="solar-system" class="reveal">
       <h2>مدار سیاره‌های منظومه شمسی</h2>
       <div style="text-align:center;">
-        <!-- ویدیو یا گیف گردش مدار -->
+        <!--  -->
         <video src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Geosynchronous_orbit.gif/250px-Geosynchronous_orbit.gif" autoplay loop muted playsinline style="width:340px; max-width:90vw; border-radius:16px; box-shadow:0 2px 24px #ffe08244;" poster="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Geosynchronous_orbit.gif/250px-Geosynchronous_orbit.gif"></video>
-        <!-- اگر ویدیو بالا نمایش داده نشد از گیف استفاده کنید: -->
+        <!-- : -->
         <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Geosynchronous_orbit.gif/250px-Geosynchronous_orbit.gif" alt="انیمیشن مدار سیاره‌ها" style="width:340px; max-width:90vw; border-radius:16px; box-shadow:0 2px 24px #ffe08244;"> -->
       </div>
       <p class="animated-text">
@@ -592,7 +592,7 @@
     <p>تمام حقوق متعلق به حسنا &copy; 2025</p>
   </footer>
   <script>
-    // تم سایت
+    
     document.querySelectorAll('.theme-switcher button').forEach(btn => {
       btn.addEventListener('click', () => {
         document.body.classList.remove('stars', 'purple');
@@ -600,7 +600,7 @@
       });
     });
 
-    // منوی همبرگری
+    
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
     hamburger.addEventListener('click', () => {
@@ -608,7 +608,7 @@
       mobileNav.classList.toggle('active');
       document.body.classList.toggle('nav-open');
     });
-    // بستن منو همبرگری با کلیک روی لینک
+    
     mobileNav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         hamburger.classList.remove('active');
@@ -617,7 +617,7 @@
       });
     });
 
-    // فعال سازی لینک منوی بالا هنگام اسکرول
+    
     function activateMenuLink() {
       let sections = Array.from(document.querySelectorAll('main section'));
       let scroll = window.scrollY + window.innerHeight/3;
@@ -629,7 +629,7 @@
     }
     window.addEventListener('scroll', activateMenuLink);
 
-    // ظاهر شدن بخش‌ها با اسکرول
+    
     function revealOnScroll() {
       let reveals = document.querySelectorAll('.reveal');
       let triggerBottom = window.innerHeight * 0.88;
@@ -642,7 +642,7 @@
     window.addEventListener('scroll', revealOnScroll);
     window.addEventListener('load', revealOnScroll);
 
-    // تکان دادن نوشته‌ها مثل جاذبه ماه
+    
     function randomGravity(element) {
       setInterval(() => {
         const x = Math.random() * 8 - 4;
@@ -652,7 +652,7 @@
     }
     document.querySelectorAll('.animated-text').forEach(randomGravity);
 
-    // تکان دادن عکس‌ها
+    
     function imgGravity(element) {
       setInterval(() => {
         const x = Math.random() * 10 - 5;
@@ -662,14 +662,14 @@
     }
     document.querySelectorAll('.animated-img').forEach(imgGravity);
 
-    // پخش صوت ماه در لوپ
+    
     const moonAudio = document.getElementById('moon-audio');
     moonAudio.volume = 0.15;
     document.body.addEventListener('click', () => {
       if (moonAudio.paused) moonAudio.play();
     });
 
-    // فعال سازی لینک منو با کلیک
+    
     document.querySelectorAll('.navbar a').forEach(link => {
       link.addEventListener('click', function() {
         document.querySelectorAll('.navbar a').forEach(a=>a.classList.remove('active'));
@@ -677,7 +677,7 @@
       });
     });
 
-    // ستاره‌های دنباله‌دار انیمیشن
+    
     function createStars() {
       const starAnim = document.getElementById('star-anim');
       for(let i=0; i<6; i++) {
@@ -690,7 +690,7 @@
     }
     createStars();
 
-    // انیمیشن لوگوی حسنا: تایپ شدن نوشته
+    
     function animateLogoText() {
       const logoText = document.querySelector('.logo-text');
       const text = "حسنا";
@@ -713,7 +713,7 @@
     }
     animateLogoText();
 
-    // انیمیشن بیشتر بخش‌های سایت: ستاره چشمک‌زن داخل هر section
+    
     document.querySelectorAll('section').forEach(section => {
       let star = document.createElement('img');
       star.src = 'https://i.imgur.com/GIWuL2n.png';
@@ -728,7 +728,7 @@
       star.style.animation = 'twinkleStar 2s infinite alternate';
       section.appendChild(star);
     });
-    // ستاره چشمک‌زن
+    
     const style = document.createElement('style');
     style.innerHTML = `
       @keyframes twinkleStar {
